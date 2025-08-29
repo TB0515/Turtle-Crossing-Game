@@ -1,4 +1,4 @@
-export class Player {
+export default class Player {
     constructor(startX, startY, sprite){
         this.x = startX;
         this.y = startY;

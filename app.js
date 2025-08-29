@@ -10,7 +10,9 @@
 // TO DO 4: Track score and level complete.
 // TO DO 5: End the loop 
 
-import { Player } from "./modules/player.js";
+import Player from "./modules/player.js";
+import Car from "./modules/cars.js";
+import Scoreboard from "./modules/scoreboard.js";
 
 
 window.addEventListener('load', function(){
@@ -26,14 +28,31 @@ window.addEventListener('load', function(){
     let carSprite = document.getElementById("car");
     
     let player = new Player(startX, startY, playerSprite);
+    let scoreboard = new Scoreboard();
+    let cars = Car.createCars(scoreboard.level, canvas.width, carSprite);
+    
+    let gameOn = true;
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bgSprite, 0, 0, canvas.width, canvas.height);
 
         player.draw(ctx);
+
+        for (let car of cars) {
+            car.move();
+            if (car.x + canvas.width < canvas.width - 100){
+                let newX = canvas.width + Math.random() * 0;
+                let newSpeed = 2 + scoreboard.level * 0.5 + Math.random()
+                car.reset(newX, car.y, newSpeed);
+            }
+            car.draw(ctx);
+
+        }
+
+        if (gameOn) {
+        requestAnimationFrame(animate);
+        }
     }
-
-    animate();
-
+   
 })
