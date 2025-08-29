@@ -4,35 +4,72 @@ export default class Car {
         this.y = y;
         this.speed = speed;
         this.sprite = sprite;
-        this.width = 64;
-        this.height = 60;
-        this.carColor = ['red', 'orange', 'pink', 'purple', 'blue', 'cyan', 'green'];
+        this.width = 96;
+        this.height = 90;
+        this.collisionOffsetsW = {
+            'orange': 14,
+            'red': 10,
+            'green': 12,
+            'yellow': 5,
+            'purple': 14,
+            'blue': 5,
+        };
+        this.collisionOffsetsH = {
+            'orange': 50,
+            'red': 45,
+            'green': 25,
+            'yellow': 23,
+            'purple': 5,
+            'blue': 5,
+        };
+
+        this.collisionHeights = {
+            'orange': 30,
+            'red': 35,
+            'green': 40,
+            'yellow': 40,
+            'purple': 42,
+            'blue': 43,
+        };
+
+        this.collisionWidths = {
+            'orange': 85,
+            'red': 79,
+            'green': 85,
+            'yellow': 90,
+            'purple': 83,
+            'blue': 90,
+        };
+
+        this.carColor = ['orange','red', 'green', 'yellow', 'purple', 'blue'];
         this.sx = {
-            'red': 0,
-            'orange': 93,
-            'pink': 178,
-            'purple': 256,
-            'blue': 0,
-            'cyan': 89,
-            'green': 175,
+            'orange': 0,
+            'red': 1000,
+            'green': 0,
+            'yellow': 1000,
+            'purple': 0,
+            'blue': 1000,
         };
         this.sy = {
+            "orange": 0,
             'red': 0,
-            'orange': 0,
-            'pink': 0,
-            'purple': 0,
-            'blue': 34,
-            'cyan': 40,
-            'green': 40,
+            'green': 666.67,
+            'yellow': 666.67,
+            'purple': 1333.33,
+            'blue': 1333.33,
         };
         this.randomColor = this.carColor[Math.floor(Math.random() * this.carColor.length)];
+        this.sxValue = this.sx[this.randomColor];
+        this.syValue = this.sy[this.randomColor];
+        this.collisionOffsetX = this.collisionOffsetsW[this.randomColor];
+        this.collisionOffsetY = this.collisionOffsetsH[this.randomColor];
+        this.collisionHeight = this.collisionHeights[this.randomColor];
+        this.collisionWidth = this.collisionWidths[this.randomColor];
+    
     }
 
     draw(ctx) {
-        console.log('Car position:', this.x, this.y);
-        let sxValue = this.sx[this.randomColor];
-        let syValue = this.sy[this.randomColor];
-        ctx.drawImage(this.sprite, sxValue, syValue, 80, 54, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.sprite, this.sxValue, this.syValue, 900, 600, this.x, this.y, this.width, this.height);
     }
 
     move() {
@@ -44,7 +81,7 @@ export default class Car {
         for (let i = 0; i < level + 5; i++) {
             const y = 100 + i * 60;
             const speed = 2 + level * 0.5 + Math.random();
-            const x = canvasWidth + Math.random() * 100;
+            const x = Math.random() * (canvasWidth - 150);
             cars.push(new Car(x, y, speed, carSprite));
         }
         return cars;
@@ -57,11 +94,20 @@ export default class Car {
     }
 
     collidesWith(player) {
-        return !(this.x + this.width < player.x ||
-                 this.x > player.x + player.width ||
-                 this.y + this.height < player.y ||
-                 this.y > player.y + player.height);
-    }
+        const carLeft = this.x + this.collisionOffsetX;
+        const carRight = carLeft + this.collisionWidth;
+        const carTop = this.y + this.collisionOffsetY;
+        const carBottom = carTop + this.collisionHeight;
 
+        const playerLeft = player.x + (player.collisionOffsetX || 0);
+        const playerRight = playerLeft + player.collisionWidth;
+        const playerTop = player.y + (player.collisionOffsetY || 0);
+        const playerBottom = playerTop + player.collisionHeight;
+
+        return !(carRight < playerLeft ||
+                carLeft > playerRight ||
+                carBottom < playerTop ||
+                carTop > playerBottom);
+    }
 }
 
