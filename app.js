@@ -6,6 +6,8 @@ import Scoreboard from "./modules/scoreboard.js";
 window.addEventListener('load', function(){
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
+    const startScreen = document.getElementById('startScreen');
+    const startBtn = document.getElementById('startGameBtn');
     canvas.width = 600;
     canvas.height = 600;
 
@@ -41,9 +43,10 @@ window.addEventListener('load', function(){
         animate();
     };
     
-    let gameOn = true;
+    let gameOn = false;
 
     function animate() {
+        if (!gameOn) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bgSprite, 0, 0, canvas.width, canvas.height);
 
@@ -79,5 +82,12 @@ window.addEventListener('load', function(){
         requestAnimationFrame(animate);
         }
     }
-    animate();
+    
+    startBtn.addEventListener('click', () => {
+        console.log('Start button clicked');
+        startScreen.style.display = 'none';
+        gameOn = true;
+        animate(); 
+    });
+    
 })

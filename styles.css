@@ -8,7 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #333;
+    background-color: black;
 }
 
 canvas {
@@ -19,4 +19,27 @@ canvas {
 
 img {
     display: none;
+}
+
+#startScreen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('./assets/turtle.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    z-index: 1000;
+}
+
+#startGameBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
 }

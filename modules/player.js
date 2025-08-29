@@ -3,11 +3,11 @@ export default class Player {
         this.x = startX;
         this.y = startY;
         this.sprite = sprite;
+        this.speed = 10;
         this.width = 40;
         this.height = 40;
         this.collisionWidth = 32;
         this.collisionHeight = 30;
-        this.speed = 10;
         this.collisionOffsetX = 4;
         this.collisionOffsetY = 4;
     }
