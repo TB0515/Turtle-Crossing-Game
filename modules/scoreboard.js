@@ -6,6 +6,7 @@ export default class Scoreboard {
 
     incrementLevel() {
         this.level++;
+        this.score ++;
     }
 
     reset() {
@@ -16,6 +17,6 @@ export default class Scoreboard {
     draw(ctx, canvas) {
         ctx.font = "20px Arial";
         ctx.fillStyle = "black";
-        ctx.fillText(`Level: ${this.level}`, 10, 25);
+        ctx.fillText(`Level: ${this.level}, Score: ${this.score}`, 10, 25);
     }
 }

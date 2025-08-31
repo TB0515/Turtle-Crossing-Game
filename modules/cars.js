@@ -99,9 +99,9 @@ export default class Car {
         const carTop = this.y + this.collisionOffsetY;
         const carBottom = carTop + this.collisionHeight;
 
-        const playerLeft = player.x + (player.collisionOffsetX || 0);
+        const playerLeft = player.x + player.collisionOffsetX;
         const playerRight = playerLeft + player.collisionWidth;
-        const playerTop = player.y + (player.collisionOffsetY || 0);
+        const playerTop = player.y + player.collisionOffsetY;
         const playerBottom = playerTop + player.collisionHeight;
 
         return !(carRight < playerLeft ||
