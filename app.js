@@ -8,6 +8,7 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     const startScreen = document.getElementById('startScreen');
     const startBtn = document.getElementById('startGameBtn');
+    const arrowBtn = document.getElementById('arrowUp');
     canvas.width = 600;
     canvas.height = 600;
 
@@ -35,6 +36,10 @@ window.addEventListener('load', function(){
     canvas.tabIndex = 0;
     canvas.focus(); 
 
+    arrowBtn.addEventListener('click', movement => {
+        player.moveUp();
+    })
+
     function resetGame(){
         scoreboard.reset();
         player.reset(startX, startY);
@@ -51,6 +56,8 @@ window.addEventListener('load', function(){
         ctx.drawImage(bgSprite, 0, 0, canvas.width, canvas.height);
 
         player.draw(ctx);
+        arrowBtn.style.display = '-webkit-flex';
+        arrowBtn.style.display = 'flex';
         scoreboard.draw(ctx, canvas);
 
         for (let car of cars) {
